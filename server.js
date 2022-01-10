@@ -17,18 +17,32 @@ function pageReader(address,res){
 }
 
 const server = http.createServer((req,res)=>{
+    console.log('request Address:', req.url , 'Method:', req.method)
     switch (req.url){
         case '/':
-            pageReader('Pages/Home.html',res)
+            pageReader('public/Pages/Home.html',res)
             break
         case '/About':
-            pageReader('Pages/About.html',res)
+            pageReader('public/Pages/About.html',res)
             break
         case '/Contact':
-            pageReader('Pages/Contact.html',res)
+            pageReader('public/Pages/Contact.html',res)
             break
         case '/FAQ':
-            pageReader('Pages/FAQ.html',res)
+            pageReader('public/Pages/FAQ.html',res)
+            break
+        case '/Styles/Styles.css':
+            fs.readFile('public/Styles/Styles.css',(err,data)=>{
+                if (err){
+                    res.writeHead(500,{'Content-Type':'text/html'})
+                    res.end()
+                }
+                else {
+                    const page = data.toString()
+                    res.writeHead(200,{'Content-Type':'text/css'})
+                    res.end(page)
+                }
+            })
             break
         default:
             res.writeHead(404)
