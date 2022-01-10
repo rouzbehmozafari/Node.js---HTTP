@@ -15,6 +15,18 @@ function pageReader(address,res){
         }
     })
 }
+function imgReader(address,res){
+    fs.readFile(address,(err,data)=>{
+        if (err){
+            res.writeHead(500,{'Content-Type':'text/html'})
+            res.end()
+        }
+        else {
+            res.writeHead(200,{'Content-Type':'image/jpeg'})
+            res.end(data)
+        }
+    })
+}
 
 const server = http.createServer((req,res)=>{
     console.log('request Address:', req.url , 'Method:', req.method)
@@ -25,11 +37,26 @@ const server = http.createServer((req,res)=>{
         case '/About':
             pageReader('public/Pages/About.html',res)
             break
-        case '/Contact':
+        case '/How':
             pageReader('public/Pages/Contact.html',res)
             break
-        case '/FAQ':
+        case '/Categories':
             pageReader('public/Pages/FAQ.html',res)
+            break
+        case '/Testimony':
+            pageReader('public/Pages/FAQ.html',res)
+            break
+        case '/images/Group%2028.png':
+            imgReader('public/images/Group 28.png',res)
+            break
+        case '/images/tish.png':
+            imgReader('public/images/tish.png',res)
+            break
+        case '/images/vector.png':
+            imgReader('public/images/vector.png',res)
+            break
+        case '/images/pinkVector.png':
+            imgReader('public/images/pinkVector.png',res)
             break
         case '/Styles/Styles.css':
             fs.readFile('public/Styles/Styles.css',(err,data)=>{
